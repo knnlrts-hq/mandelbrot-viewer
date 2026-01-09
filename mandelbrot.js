@@ -359,8 +359,8 @@ class MandelbrotCanvas {
     // the new state, updates the URL, and saves the state in browser history.
     handleKey(event) {
         switch (event.key) {
-            case "Escape": // Type Escape to go back to the
-                initial statethis.setState(PageState.initialState());
+            case "Escape": // Type Escape to go back to the initial state
+                this.setState(PageState.initialState());
                 break;
             case "+": // Type + to increase the number of iterations
                 this.setState(s => {
