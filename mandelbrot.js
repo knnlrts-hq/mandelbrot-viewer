@@ -135,16 +135,15 @@ class PageState {
     // a valid state could not be read from the URL.
     static fromURL(url) {
         let s = new PageState();
-        let u = new URL(url); // Initialize state from the url's
-        search params.
+        let u = new URL(url); // Initialize state from the url's search params.
         s.cx = parseFloat(u.searchParams.get("cx"));
         s.cy = parseFloat(u.searchParams.get("cy"));
         s.perPixel = parseFloat(u.searchParams.get("pp"));
         s.maxIterations = parseInt(u.searchParams.get("it"));
         // If we got valid values, return the PageState object, otherwise null.
-        return (isNaN(s.cx) || isNaN(s.cy) || isNaN(s.perPixel) || isNaN(s.maxIterations)) ?
-            null :
-            s;
+        return (isNaN(s.cx) || isNaN(s.cy) || isNaN(s.perPixel) || isNaN(s.maxIterations)) 
+            ? null 
+            : s;
     }
     // This instance method encodes the current state into the search
     // parameters of the browser's current location.
@@ -159,9 +158,7 @@ class PageState {
 }
 // These constants control the parallelism of the Mandelbrot set computation.
 // You may need to adjust them to get optimum performance on your computer.
-const ROWS = 3,
-    COLS = 4,
-    NUMWORKERS = navigator.hardwareConcurrency || 2;
+const ROWS = 3, COLS = 4, NUMWORKERS = navigator.hardwareConcurrency || 2;
 // This is the main class of our Mandelbrot set program. Simply invoke the
 // constructor function with the <canvas> element to render into. The program
 // assumes that this <canvas> element is styled so that it is always as big
@@ -284,10 +281,8 @@ class MandelbrotCanvas {
                 // them in the colorTable array.
                 // If we haven't allocated a color table yet, or if it is no longer
                 // the right size, then allocate a new one.
-                if (!this.colorTable || this.colorTable.length !==
-                    maxIterations + 1) {
-                    this.colorTable = new
-                    Uint32Array(maxIterations + 1);
+                if (!this.colorTable || this.colorTable.length !== maxIterations + 1) {
+                    this.colorTable = new Uint32Array(maxIterations + 1);
                 }
                 // Given the max and the min, compute appropriate values in the
                 // color table. Pixels in the set will be colored fully opaque
@@ -295,8 +290,7 @@ class MandelbrotCanvas {
                 // iteration counts resulting in higher opacity. Pixels with
                 // minimum iteration counts will be transparent and the white
                 // background will show through, resulting in a grayscale image.
-                if (min === max) { // If all the pixels
-                    are the same,
+                if (min === max) { // If all the pixels are the same,
                     if (min === maxIterations) { // Then make them all black
                         this.colorTable[min] = 0xFF000000;
                     } else { // Or all transparent.
@@ -309,15 +303,13 @@ class MandelbrotCanvas {
                     // operator to turn that into a pixel value.
                     let maxlog = Math.log(1 + max - min);
                     for (let i = min; i <= max; i++) {
-                        this.colorTable[i] =
-                            (Math.ceil(Math.log(1 + i - min) / maxlog * 255) << 24);
+                        this.colorTable[i] = (Math.ceil(Math.log(1 + i - min) / maxlog * 255) << 24);
                     }
                 }
                 // Now translate the iteration numbers in each response 's
                 // ImageData to colors from the colorTable.
                 for (let r of responses) {
-                    let iterations = new
-                    Uint32Array(r.imageData.data.buffer);
+                    let iterations = new Uint32Array(r.imageData.data.buffer);
                     for (let i = 0; i < iterations.length; i++) {
                         iterations[i] = this.colorTable[iterations[i]];
                     }
